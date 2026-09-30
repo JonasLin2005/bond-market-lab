@@ -1,0 +1,28 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: pytest -q
+      - name: CLI smoke test
+        run: |
+          bondlab demo --db ci.sqlite --days 60 --log-days 1 --every 120
+          bondlab query quote_staleness --db ci.sqlite
+          bondlab refit --db ci.sqlite --every 60
+          bondlab newissue --db ci.sqlite --sector local_gov --tenor 10 --issuer "Province B"
+          bondlab pnl --db ci.sqlite --sessions 20 --xlsx ci.xlsx

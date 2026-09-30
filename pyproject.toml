@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bondlab"
+version = "0.1.0"
+description = "A simulated interbank bond market with a rate-limited quote API, a SQLite quote logger and a Nelson-Siegel curve refit checked against the true curve."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Jonason Lin" }]
+dependencies = ["numpy>=1.22", "pandas>=2.0", "scipy>=1.9"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "matplotlib>=3.6", "openpyxl>=3.0", "tabulate>=0.9"]
+
+[project.scripts]
+bondlab = "bondlab.cli:main"
+
+[tool.setuptools]
+packages = ["bondlab"]
+
+[tool.setuptools.package-data]
+bondlab = ["sql/*.sql"]

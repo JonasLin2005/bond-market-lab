@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+*.sqlite
+*.sqlite-journal
+.cache/
+.DS_Store
